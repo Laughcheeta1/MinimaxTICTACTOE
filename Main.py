@@ -9,11 +9,13 @@ def main():
         board.printBoard()
 
 
+# TODO: fix the game where the grid is 7 x 3 (not giving a win when it should)
+
 
 
 # Returns true if the game continues, else returns false
 def nextTurn(board):
-    input_given = input("Enter the next move: ").split(", ")
+    input_given = input("Enter the next move: ").replace(" ", "").split(",") # Remove all spaces and split by comma
     move = (int(input_given[0]), int(input_given[1]))
     result = board.enterMove(move)
     while result == "I":
@@ -37,14 +39,14 @@ def nextTurn(board):
     
 
 def getInitialTurns():
-    humanTurn = input("You want to play as X or O?: ")
-    while humanTurn != "X" and humanTurn != "O":
+    humanTurn = input("You want to play as X or O?: ").lower()
+    while humanTurn != "x" and humanTurn != "o":
         humanTurn = input("You want to play as X or O?: ")
 
-    if humanTurn == "X":
-        computerTurn = "O"
+    if humanTurn == "x":
+        computerTurn = "o"
     else:
-        computerTurn = "X"
+        computerTurn = "x"
 
     return humanTurn, computerTurn
 

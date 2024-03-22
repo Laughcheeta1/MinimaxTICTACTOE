@@ -6,6 +6,8 @@ class Board:
         self.moves = []
         # The board will be a 2D array, can be whatever board size you want
         self.boardSize = (boardSize[0] if boardSize[0] > 3 else 3, boardSize[1] if boardSize[1] > 3 else 3)
+        self.requiredWin = min(self.boardSize[0], self.boardSize[1]) # Create the required connections to win depending on the grid
+        print(f"The win Is {self.requiredWin}")
         # Initialize the board
         self.board = [ [ " " for _ in range(self.boardSize[1]) ] for _ in range(self.boardSize[0]) ]
 
@@ -68,65 +70,65 @@ class Board:
     
     def checkRow(self, value, move):
         # check left side
-        i = 1
-        while i < 3 and move[1] - i >= 0 and self.board[move[0]][move[1] - i] == value:
+        i = 0
+        while i < self.requiredWin and move[1] - i >= 0 and self.board[move[0]][move[1] - i] == value:
             i += 1
         
-        if i == 3:
+        if i == self.requiredWin:
             return True
         
         # check right side
-        i = 1
-        while i < 3 and move[1] + i < self.boardSize[1] and self.board[move[0]][move[1] + i] == value:
+        i = 0
+        while i < self.requiredWin and move[1] + i < self.boardSize[1] and self.board[move[0]][move[1] + i] == value:
             i += 1
         
-        return True if i == 3 else False
+        return True if i == self.requiredWin else False
     
 
     def checkColumn(self, value, move):
         # check top
-        i = 1
-        while i < 3 and move[1] - i >= 0 and self.board[move[0] - i][move[1]] == value:
+        i = 0
+        while i < self.requiredWin and move[0] - i >= 0 and self.board[move[0] - i][move[1]] == value:
             i += 1
         
-        if i == 3:
+        if i == self.requiredWin:
             return True
         
         # check bottom
-        i = 1
-        while i < 3 and move[1] + i < self.boardSize[0] and self.board[move[0] + 1][move[1]] == value:
+        i = 0
+        while i < self.requiredWin and move[0] + i < self.boardSize[0] and self.board[move[0] + 1][move[1]] == value:
             i += 1
         
-        return True if i == 3 else False
+        return True if i == self.requiredWin else False
 
     def checkDiagonals(self, value, move):
         # check top left
-        i = 1
-        while i < 3 and move[0] - i >= 0 and move[1] - i >= 0 and self.board[move[0] - i][move[1] - i] == value:
+        i = 0
+        while i < self.requiredWin and move[0] - i >= 0 and move[1] - i >= 0 and self.board[move[0] - i][move[1] - i] == value:
             i += 1
         
-        if i == 3:
+        if i == self.requiredWin:
             return True
         
         # check bottom right
-        i = 1
-        while i < 3 and move[0] + i < self.boardSize[0] and move[1] + i < self.boardSize[1] and self.board[move[0] + i][move[1] + i] == value:
+        i = 0
+        while i < self.requiredWin and move[0] + i < self.boardSize[0] and move[1] + i < self.boardSize[1] and self.board[move[0] + i][move[1] + i] == value:
             i += 1
         
-        if i == 3:
+        if i == self.requiredWin:
             return True
         
         # check top right
-        i = 1
-        while i < 3 and move[0] - i >= 0 and move[1] + i < self.boardSize[1] and self.board[move[0] - i][move[1] + i] == value:
+        i = 0
+        while i < self.requiredWin and move[0] - i >= 0 and move[1] + i < self.boardSize[1] and self.board[move[0] - i][move[1] + i] == value:
             i += 1
         
-        if i == 3:
+        if i == self.requiredWin:
             return True
         
         # check bottom left
-        i = 1
-        while i < 3 and move[0] + i < self.boardSize[0] and move[1] - i >= 0 and self.board[move[0] + i][move[1] - i] == value:
+        i = 0
+        while i < self.requiredWin and move[0] + i < self.boardSize[0] and move[1] - i >= 0 and self.board[move[0] + i][move[1] - i] == value:
             i += 1
         
-        return True if i == 3 else False
+        return True if i == self.requiredWin else False
