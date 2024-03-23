@@ -9,10 +9,6 @@ def main():
         board.printBoard()
 
 
-# TODO: fix the game where the grid is 7 x 3 (not giving a win when it should)
-
-
-
 # Returns true if the game continues, else returns false
 def nextTurn(board):
     input_given = input("Enter the next move: ").replace(" ", "").split(",") # Remove all spaces and split by comma
@@ -24,7 +20,7 @@ def nextTurn(board):
         move = (int(input_given[0]), int(input_given[1]))
         result = board.enterMove(move)
     
-    if result == "A":
+    if result == "C":
         return True
 
     if result == "T":

@@ -28,7 +28,7 @@ class Board:
 
     # Return values:
     # "I" -> Invalid move
-    # "A" -> Accepted move
+    # "C" -> Game continues
     # "T" -> Tie
     # winner -> Finished game (The move produced a winner)
     def enterMove(self, move):
@@ -48,14 +48,22 @@ class Board:
         self.turnNumber += 1
         self.moves.append(move)
 
+        return self.checkCurrentState()
+
+
+    # "C" -> Game continues
+    # "T" -> Tie
+    # winner -> Finished game (The move produced a winner)
+    def checkCurrentState(self):
         if self.checkFinalState():
             return "X" if (self.turnNumber - 1) % 2 == 0 else "O"
-
+        
         if self.turnNumber == self.boardSize[0] * self.boardSize[1]:
             return "T"
-
-        return "A"
+        
+        return "C"
     
+
     def checkFinalState(self):
         # Instead of constantly checking the whole board is better to just check the last
         # move made, and see if it generated a win condition (3 in a row).
@@ -68,6 +76,7 @@ class Board:
             self.checkDiagonals(value, lastMove)
         )
     
+
     def checkRow(self, value, move):
         # check left side
         i = 0
@@ -101,6 +110,7 @@ class Board:
         
         return True if i == self.requiredWin else False
 
+
     def checkDiagonals(self, value, move):
         # check top left
         i = 0
@@ -132,3 +142,4 @@ class Board:
             i += 1
         
         return True if i == self.requiredWin else False
+
