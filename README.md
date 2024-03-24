@@ -29,7 +29,7 @@ One thing to note, is that in my search of not making every game exactly the sam
 This will make that in reality the computer is not making the exact best move each time, but since the computer is assuming that the human will do the best move, then it will not matter.
 
 Explaning this better:
-* Lets say we have an empy 3x3 grid:
+Lets say we have an empy 3x3 grid:
     ![Alt text](./forReadme/empty3x3grid.png "Empty grid")
 
 If both players are playing optimally, it doesn't really matter where the first player puts his value, the second player will always force a tie.
@@ -37,10 +37,12 @@ If both players are playing optimally, it doesn't really matter where the first 
 But arguably the best move for the first player is to put his value in one of the cornes, since that will give him the most chances of winning, because unless the second player plays middle, then it is a win for X.
 * This can be seen in the following examples:
     ![Alt text](./forReadme/winning1.png "First player corner")
-* In this example circle needs to play middle now, or it is a win for X, but after circle moves here, X plays in the top right corner, and that makes it a win for X, since no matter where O plays, X has a winning move.
+In this example circle needs to play middle now, or it is a win for X, but after circle moves here, X plays in the top right corner, and that makes it a win for X, since no matter where O plays, X has a winning move.
+
+
 
     ![Alt text](./forReadme/winning2.png "Second player middle")
-* In this example I made it even more clear, were the blue X mean the winning places for X in the next turn.
+In this example I made it even more clear, were the blue X mean the winning places for X in the next turn.
 
 All this happens to all cases where after X playing in the corner, O doesn't play in the middle.
 
