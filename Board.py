@@ -1,10 +1,8 @@
 class Board:
-    # The rules stay the same even for boards bigger than 3, you have to make 3 in a row
-
     def __init__(self, boardSize):
         self.turnNumber = 0
         self.moves = []
-        # The board will be a 2D array, can be whatever board size you want
+        # The board will be a 2D array, the number of rows or columns must be at least 3
         self.boardSize = (boardSize[0] if boardSize[0] > 3 else 3, boardSize[1] if boardSize[1] > 3 else 3)
         self.requiredWin = min(self.boardSize[0], self.boardSize[1]) # Create the required connections to win depending on the grid
         # Initialize the board
@@ -36,14 +34,15 @@ class Board:
     # "T" -> Tie
     # winner -> Finished game (The move produced a winner)
     def enterMove(self, move):
+        # Check for an invalid move
+        # Both this if statements could be done in a single If, but for readability, I prefer to 
+        # divide them.
         if (move[0] < 0 or move[0] >= self.boardSize[0]) or (move[1] < 0 or move[1] >= self.boardSize[1]):
             return "I"
         if self.board[move[0]][move[1]] != " ":
             return "I"
-
-        # Both this if statements could be done in a single If, but for readability, I prefer to 
-        # divide them.
         
+        # Enter the move
         if self.turnNumber % 2 == 0:
             self.board[move[0]][move[1]] = "X"
         else:
@@ -55,7 +54,7 @@ class Board:
         return self.checkCurrentState()
 
 
-    def revertMove(self):
+    def revertMove(self): # This is for the minimax class
         if self.turnNumber == 0:
             return
         
@@ -67,6 +66,7 @@ class Board:
     # "C" -> Game continues
     # "T" -> Tie
     # winner -> Finished game (The move produced a winner)
+    # Checks if the game ended (win or tie) or it continues
     def checkCurrentState(self):
         if self.turnNumber == 0:
             return "C"
@@ -92,6 +92,13 @@ class Board:
             self.checkDiagonals(value, lastMove)
         )
     
+    """
+    The strategy for cheking this thins is that we are going to search for an extreme in the row, column or diagonal, and start 
+    counting from there. That way we can avoid checking the whole board, while still being able to check for cases like this:
+    X| |X  
+      Assume tha last move will be in the center, if we only check the right (or left) side of the last move, we will miss the win condition
+      But by going to an extreme, and checking from there (In this case, go to all the left, and count to the right) we will catch the win.
+    """
 
     def checkRow(self, value, move):
         # Go to the left side

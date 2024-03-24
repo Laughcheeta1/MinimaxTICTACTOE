@@ -23,10 +23,10 @@ class Minimax:
 
     def makeMove(self):
         self.gameTree = self.gameTree.childs[self.gameTree.bestMoveIndex] # Change the tree to the best move
-        return self.gameTree.move
+        return self.gameTree.move # Since we changed the tree to the best move, we can return the move
 
 
-    def registerMove(self, move):
+    def registerMove(self, move): # Register the move that the player made
         for child in self.gameTree.childs:
             if child.move == move:
                 self.gameTree = child
@@ -65,7 +65,7 @@ class Minimax:
         
 
     # As there can be a lot of max (or min) moves that can give maximum or minimum, just pick one random, as to not make all games feel equal
-    # (Even tho they are)
+    # (Even tho the results are)
     def findMinValue(self, node):
         currentMin = float("inf")
         minMoves = []
