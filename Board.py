@@ -51,10 +51,22 @@ class Board:
         return self.checkCurrentState()
 
 
+    def revertMove(self):
+        if self.turnNumber == 0:
+            return
+        
+        move = self.moves.pop()
+        self.board[move[0]][move[1]] = " "
+        self.turnNumber -= 1
+
+
     # "C" -> Game continues
     # "T" -> Tie
     # winner -> Finished game (The move produced a winner)
     def checkCurrentState(self):
+        if self.turnNumber == 0:
+            return "C"
+
         if self.checkFinalState():
             return "X" if (self.turnNumber - 1) % 2 == 0 else "O"
         
@@ -105,7 +117,7 @@ class Board:
         
         # check bottom
         i = 0
-        while i < self.requiredWin and move[0] + i < self.boardSize[0] and self.board[move[0] + 1][move[1]] == value:
+        while i < self.requiredWin and move[0] + i < self.boardSize[0] and self.board[move[0] + i][move[1]] == value:
             i += 1
         
         return True if i == self.requiredWin else False
@@ -143,3 +155,15 @@ class Board:
         
         return True if i == self.requiredWin else False
 
+
+    def getAvailableMoves(self):
+        """
+        Returns a list of available moves for the given board.
+        """
+        availableMoves = []
+        for i in range(self.boardSize[0]):
+            for j in range(self.boardSize[1]):
+                if self.board[i][j] == " ":
+                    availableMoves.append((i, j))
+        
+        return availableMoves
