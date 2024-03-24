@@ -37,6 +37,7 @@ If both players are playing optimally, it doesn't really matter where the first 
 But arguably the best move for the first player is to put his value in one of the cornes, since that will give him the most chances of winning, because unless the second player plays middle, then it is a win for X.
 * This can be seen in the following examples:
     ![Alt text](./forReadme/winning1.png "First player corner")
+
 In this example circle needs to play middle now, or it is a win for X, but after circle moves here, X plays in the top right corner, and that makes it a win for X, since no matter where O plays, X has a winning move.
 
 <br><br>
