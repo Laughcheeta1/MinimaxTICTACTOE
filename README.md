@@ -39,8 +39,7 @@ But arguably the best move for the first player is to put his value in one of th
     ![Alt text](./forReadme/winning1.png "First player corner")
 In this example circle needs to play middle now, or it is a win for X, but after circle moves here, X plays in the top right corner, and that makes it a win for X, since no matter where O plays, X has a winning move.
 
-
-
+<br><br>
     ![Alt text](./forReadme/winning2.png "Second player middle")
 In this example I made it even more clear, were the blue X mean the winning places for X in the next turn.
 
