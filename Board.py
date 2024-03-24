@@ -94,70 +94,81 @@ class Board:
     
 
     def checkRow(self, value, move):
-        # check left side
-        i = 0
-        while i < self.requiredWin and move[1] - i >= 0 and self.board[move[0]][move[1] - i] == value:
-            i += 1
+        # Go to the left side
+        i = move[1]
+        while i > 0:
+            if self.board[move[0]][i - 1] != value:
+                break
+            i -= 1
         
         if i == self.requiredWin:
             return True
         
         # check right side
-        i = 0
-        while i < self.requiredWin and move[1] + i < self.boardSize[1] and self.board[move[0]][move[1] + i] == value:
+        counter = 0
+        while counter < self.requiredWin and i < self.boardSize[1] and self.board[move[0]][i] == value:
             i += 1
+            counter += 1
         
-        return True if i == self.requiredWin else False
+        return True if counter == self.requiredWin else False
     
 
     def checkColumn(self, value, move):
-        # check top
-        i = 0
-        while i < self.requiredWin and move[0] - i >= 0 and self.board[move[0] - i][move[1]] == value:
-            i += 1
-        
-        if i == self.requiredWin:
-            return True
+        # Go to the top
+        j = move[0]
+        while j > 0:
+            if self.board[j - 1][move[1]] != value:
+                break
+            j -= 1
         
         # check bottom
-        i = 0
-        while i < self.requiredWin and move[0] + i < self.boardSize[0] and self.board[move[0] + i][move[1]] == value:
-            i += 1
+        counter = 0
+        while counter < self.requiredWin and j < self.boardSize[0] and self.board[j][move[1]] == value:
+            j += 1
+            counter += 1
         
-        return True if i == self.requiredWin else False
+        return True if counter == self.requiredWin else False
 
 
     def checkDiagonals(self, value, move):
-        # check top left
-        i = 0
-        while i < self.requiredWin and move[0] - i >= 0 and move[1] - i >= 0 and self.board[move[0] - i][move[1] - i] == value:
+        # Remember j is the row and i is the column
+        # Move to the top left corner of the diagonal (or presumed diagonal)
+        j = move[0]
+        i = move[1]
+        while i > 0 and j > 0: # If it is already in a corner, we dont want to go further than that
+            if self.board[j - 1][i - 1] != value:
+                break
+            i -= 1
+            j -= 1
+    
+        # Check the diagonal in a down-right direction
+        counter = 0
+        while i < self.boardSize[1] and j < self.boardSize[0] and self.board[j][i] == value and counter < self.requiredWin:
+            # The last condition is unnecesary but it is intended to avoid checking more than necessary (example: a 3 x 1000 board)
             i += 1
-        
-        if i == self.requiredWin:
+            j += 1
+            counter += 1
+
+        if counter == self.requiredWin:
             return True
-        
-        # check bottom right
-        i = 0
-        while i < self.requiredWin and move[0] + i < self.boardSize[0] and move[1] + i < self.boardSize[1] and self.board[move[0] + i][move[1] + i] == value:
+
+        # Move to the bottom left corner of the diagonal (or presumed diagonal)
+        j = move[0]
+        i = move[1]
+        while j < self.boardSize[0] - 1 and i > 0:
+            if self.board[j + 1][i - 1] != value:
+                break
+            i -= 1
+            j += 1
+
+        counter = 0
+        while i < self.boardSize[1] and j >= 0 and self.board[j][i] == value and counter < self.requiredWin:
+            # The last condition is unnecesary but it is intended to avoid checking more than necessary (example: a 3 x 1000 board)
             i += 1
-        
-        if i == self.requiredWin:
-            return True
-        
-        # check top right
-        i = 0
-        while i < self.requiredWin and move[0] - i >= 0 and move[1] + i < self.boardSize[1] and self.board[move[0] - i][move[1] + i] == value:
-            i += 1
-        
-        if i == self.requiredWin:
-            return True
-        
-        # check bottom left
-        i = 0
-        while i < self.requiredWin and move[0] + i < self.boardSize[0] and move[1] - i >= 0 and self.board[move[0] + i][move[1] - i] == value:
-            i += 1
-        
-        return True if i == self.requiredWin else False
+            j -= 1
+            counter += 1
+
+        return True if counter == self.requiredWin else False
 
 
     def getAvailableMoves(self):

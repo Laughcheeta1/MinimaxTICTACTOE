@@ -15,7 +15,6 @@ class Game:
 
 
     def nextTurn(self):
-
         if self.board.turn() == self.player:
             result = self.playerTurn()
         else:
