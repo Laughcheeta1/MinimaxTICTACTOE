@@ -11,7 +11,14 @@ class Minimax:
     def __init__(self, board):
         self.game = board
         self.gameTree = Node(None)
+        self.possibleGamesFound = 0
+        print("Computer is thinking ...")
         self.calculateValue(self.gameTree, True) # Calculate the expected value of the whole game (If playing optimally)
+        print(f"Possible games found: {self.possibleGamesFound}")
+
+
+    def printExpectedOutcome(self):
+        print(f"Expected outcome is {'X win' if self.gameTree.gameValue == 1 else 'O win' if self.gameTree.gameValue == -1 else 'Tie'}\n")
 
 
     def makeMove(self):
@@ -31,12 +38,15 @@ class Minimax:
         res = self.game.checkCurrentState()
         if res == "X": # X winning
             currentNode.gameValue = 1
+            self.possibleGamesFound += 1
             return
         if res == "O": # O winning
             currentNode.gameValue = -1
+            self.possibleGamesFound += 1
             return
         if res == "T": # Tie
             currentNode.gameValue = 0
+            self.possibleGamesFound += 1
             return
         
         currentNode.childs = [Node(move) for move in self.game.getAvailableMoves()]

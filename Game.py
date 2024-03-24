@@ -6,12 +6,14 @@ class Game:
         self.player = self.getPlayerTurn()
         size = [int(input("Enter the number of rows: ")), int(input("Enter the number of columns: "))]
         self.board = Board(size)
-        self.board.printBoard()
 
         # Minimax is intended to search for the optimal path to victory from the beginning
         self.computer = Minimax(self.board)
+        self.board.printBoard()
+        self.computer.printExpectedOutcome()
         while self.nextTurn():
             self.board.printBoard()
+            self.computer.printExpectedOutcome()
 
 
     def nextTurn(self):
