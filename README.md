@@ -42,6 +42,7 @@ In this example circle needs to play middle now, or it is a win for X, but after
 
 <br><br>
     ![Alt text](./forReadme/winning2.png "Second player middle")
+
 In this example I made it even more clear, were the blue X mean the winning places for X in the next turn.
 
 All this happens to all cases where after X playing in the corner, O doesn't play in the middle.
