@@ -59,14 +59,22 @@ class Minimax:
     def findMinValue(self, node):
         currentMin = float("inf")
         minMoves = []
+        minMovesIndexes = []
+        i = 0
+
         for childNode in node.childs:
             if childNode.gameValue < currentMin: # If there is a new min, clear the list of moves and start with the min
                 currentMin = childNode.gameValue
                 minMoves = []
+                minMovesIndexes = []
+
             if childNode.gameValue == currentMin:
                 minMoves.append(childNode.move)
+                minMovesIndexes.append(i)
 
-        return currentMin, int(random.random() * 10) % len(minMoves) # Get a random index in the list of best moves
+            i += 1
+
+        return currentMin, random.choice(minMovesIndexes) # Get a random index in the list of best moves
 
 
     # As there can be a lot of max (or min) moves that can give maximum or minimum, just pick one random, as to not make all games feel equal
@@ -74,12 +82,19 @@ class Minimax:
     def findMaxValue(self, node):
         currentMax = float("-inf") # Maximum value we have found
         maxMoves = [] # Moves that will get us the maximum value
+        maxMovesIndexes = []
+        i = 0
+
         for childNode in node.childs:
             if childNode.gameValue > currentMax: # If there is a new max, clear the list of moves and start with the min
                 currentMax = childNode.gameValue
                 maxMoves = []
+                maxMovesIndexes = []
             
             if childNode.gameValue == currentMax:
                 maxMoves.append(childNode.move)
+                maxMovesIndexes.append(i)
+            
+            i += 1
 
-        return currentMax, int(random.random() * 10) % len(maxMoves) # Get a random index in the list of best moves
+        return currentMax, random.choice(maxMovesIndexes) # Get a random index in the list of best moves
