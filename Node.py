@@ -7,5 +7,5 @@ class Node:
     def __init__(self, move):
         self.move = move
         self.gameValue = None
-        self.bestMove = None
+        self.bestMoveIndex = None
         self.childs = []

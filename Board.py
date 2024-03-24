@@ -7,9 +7,13 @@ class Board:
         # The board will be a 2D array, can be whatever board size you want
         self.boardSize = (boardSize[0] if boardSize[0] > 3 else 3, boardSize[1] if boardSize[1] > 3 else 3)
         self.requiredWin = min(self.boardSize[0], self.boardSize[1]) # Create the required connections to win depending on the grid
-        print(f"The win Is {self.requiredWin}")
         # Initialize the board
         self.board = [ [ " " for _ in range(self.boardSize[1]) ] for _ in range(self.boardSize[0]) ]
+
+
+    # Returns the player who is to play
+    def turn(self):
+        return "X" if self.turnNumber % 2 == 0 else "O"
 
 
     def printBoard(self):

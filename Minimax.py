@@ -2,19 +2,31 @@ from Board import Board
 from Node import Node
 import random
 
+# TODO: it is not playin optimally
+
 class Minimax:
     # X will be the maximizing player (1)
     # O will be the minimizing player (-1)
     # The tie condition will be 0
-    def __init__(self, board, isMaximixingPlayer):
+    def __init__(self, board):
         self.game = board
-        self.isMaximixingPlayer = isMaximixingPlayer
         self.gameTree = Node(None)
-        self.calculateValue(self.gameTree, isMaximixingPlayer)
-        print("Just checking everything is working fine")
+        self.calculateValue(self.gameTree, True) # Calculate the expected value of the whole game (If playing optimally)
 
 
-    # This gets the value of the 
+    def makeMove(self):
+        self.gameTree = self.gameTree.childs[self.gameTree.bestMoveIndex] # Change the tree to the best move
+        return self.gameTree.move
+
+
+    def registerMove(self, move):
+        for child in self.gameTree.childs:
+            if child.move == move:
+                self.gameTree = child
+                return
+
+
+    # This gets the value of the node. 
     def calculateValue(self, currentNode, isMaximixingPlayer):
         res = self.game.checkCurrentState()
         if res == "X": # X winning
@@ -37,10 +49,9 @@ class Minimax:
         
         # Fill the best move and the value of the current node
         if isMaximixingPlayer:
-            currentNode.gameValue, currentNode.bestMove = self.findMaxValue(currentNode)
+            currentNode.gameValue, currentNode.bestMoveIndex = self.findMaxValue(currentNode)
         else:
-            currentNode.gameValue, currentNode.bestMove = self.findMinValue(currentNode)
-        # currentNode.gameValue, currentNode.bestMove = self.findMaxValue(currentNode) if isMaximixingPlayer else self.findMinValue(currentNode)
+            currentNode.gameValue, currentNode.bestMoveIndex = self.findMinValue(currentNode)
         
 
     # As there can be a lot of max (or min) moves that can give maximum or minimum, just pick one random, as to not make all games feel equal
@@ -55,7 +66,7 @@ class Minimax:
             if childNode.gameValue == currentMin:
                 minMoves.append(childNode.move)
 
-        return currentMin, random.choice(minMoves)
+        return currentMin, int(random.random() * 10) % len(minMoves) # Get a random index in the list of best moves
 
 
     # As there can be a lot of max (or min) moves that can give maximum or minimum, just pick one random, as to not make all games feel equal
@@ -71,4 +82,4 @@ class Minimax:
             if childNode.gameValue == currentMax:
                 maxMoves.append(childNode.move)
 
-        return currentMax, random.choice(maxMoves)
+        return currentMax, int(random.random() * 10) % len(maxMoves) # Get a random index in the list of best moves
